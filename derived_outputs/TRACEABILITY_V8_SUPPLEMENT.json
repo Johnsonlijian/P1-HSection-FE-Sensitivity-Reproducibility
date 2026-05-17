@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-17T20:50:19",
+  "generated_at": "2026-05-17T21:05:31",
   "new_evidence_items": [
     {
       "id": "E-SOLVER-RAW-SEPH-JOB2",
@@ -23,6 +23,16 @@
       ],
       "allowed_claim": "A solver-complete reference workflow exists in the broader project ecosystem.",
       "forbidden_claim": "This is not direct external validation of the P1 sensitivity ratios."
+    },
+    {
+      "id": "E-SOFTWAREX-SCANDELLA-VALIDATION",
+      "description": "Local SoftwareX validation summary for Scandella et al. G1-G4 shear specimens.",
+      "derived_outputs": [
+        "R:\\NAS_DRIVE\\IMUT\\1-Research_Output\\1-Papers\\1_In_Preparation\\2026-Abaqus-experimentclarify-archive\\ai_autoboost\\high_probability_supplements\\outputs\\softwarex_scandella_validation_summary.csv",
+        "R:\\NAS_DRIVE\\IMUT\\1-Research_Output\\1-Papers\\1_In_Preparation\\2026-Abaqus-experimentclarify-archive\\ai_autoboost\\high_probability_supplements\\docs\\SOFTWAREX_SCANDella_VALIDATION_AUDIT.md"
+      ],
+      "allowed_claim": "A related local shear workflow has reported experiment-comparison errors of 0.6-7.1% across four Scandella specimens.",
+      "forbidden_claim": "These results do not directly validate the P1 shell-representation sensitivity ratios."
     },
     {
       "id": "E-DECONFOUNDED-PROBE",

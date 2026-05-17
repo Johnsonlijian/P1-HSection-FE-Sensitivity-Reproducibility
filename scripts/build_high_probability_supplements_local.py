@@ -322,6 +322,31 @@ def softwarex_solver_audit() -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def softwarex_validation_audit() -> pd.DataFrame:
+    summary = SOFTWAREX_ROOT / "G1-G4_完整分析结果汇总.md"
+    text = read_text(summary)
+    rows = []
+    # Expected table rows contain G1-G4, simulated kN, experimental kN, error %, LPF and displacement.
+    pattern = re.compile(
+        r"\|\s*\*\*(G\d)\*\*\s*\|[^|]*\|\s*\*\*?([0-9.]+)\*\*?\s*\|\s*([0-9.]+)\s*\|\s*\*\*?([+-]?[0-9.]+)%\*\*?\s*\|\s*([0-9.]+)\s*\|\s*([0-9.]+)\s*\|"
+    )
+    for m in pattern.finditer(text):
+        rows.append(
+            {
+                "specimen": m.group(1),
+                "fe_predicted_shear_kN": float(m.group(2)),
+                "experimental_shear_kN": float(m.group(3)),
+                "signed_error_percent": float(m.group(4)),
+                "abs_error_percent": abs(float(m.group(4))),
+                "reported_lpf": float(m.group(5)),
+                "reported_max_displacement_mm": float(m.group(6)),
+                "source_file": str(summary),
+                "source_interpretation": "SoftwareX/Scandella shear-workflow validation summary; not a direct validation of P1 paired sensitivity ratios.",
+            }
+        )
+    return pd.DataFrame(rows)
+
+
 def make_softwarex_plot(df: pd.DataFrame) -> Path:
     out = FIG_DIR / "softwarex_solver_status_summary.png"
     if df.empty:
@@ -465,6 +490,38 @@ def softwarex_report(df: pd.DataFrame, plot_path: Path) -> Path:
     return path
 
 
+def softwarex_validation_report(df: pd.DataFrame) -> Path:
+    path = DOC_DIR / "SOFTWAREX_SCANDella_VALIDATION_AUDIT.md"
+    lines = [
+        "# SoftwareX Scandella Validation Audit",
+        "",
+        f"Audit generated: {datetime.now().isoformat(timespec='seconds')}",
+        "",
+        "## Scope",
+        "",
+        "This audit parses the local SoftwareX validation summary for Scandella et al. steel-plate-girder shear specimens G1-G4. These results are evidence that a related local Abaqus shear workflow has been checked against experiments. They are not direct validation of the P1 paired shell-representation sensitivity ratios.",
+        "",
+    ]
+    if df.empty:
+        lines.append("No validation rows were parsed.")
+    else:
+        mean_abs = df["abs_error_percent"].mean()
+        max_abs = df["abs_error_percent"].max()
+        lines.extend(
+            [
+                f"Parsed specimens: {len(df)}.",
+                f"Mean absolute percentage error: {mean_abs:.2f}%.",
+                f"Maximum absolute percentage error: {max_abs:.2f}%.",
+                "",
+                df[["specimen", "fe_predicted_shear_kN", "experimental_shear_kN", "signed_error_percent", "reported_lpf"]].to_markdown(index=False),
+                "",
+                "Manuscript implication: these values may be used to justify the SoftwareX workflow as an external benchmark contrast, but the manuscript must state that the benchmark geometry/workflow differs from the P1 paired archive and is not merged into the P1 statistical evidence.",
+            ]
+        )
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return path
+
+
 def deconfounded_probe_report(df: pd.DataFrame) -> Path:
     path = DOC_DIR / "DECONFOUNDED_MATCH_PROBE.md"
     lines = [
@@ -537,6 +594,16 @@ def build_traceability(raw_report: Path, softwarex_report_path: Path, probe_repo
                 "forbidden_claim": "This is not direct external validation of the P1 sensitivity ratios.",
             },
             {
+                "id": "E-SOFTWAREX-SCANDELLA-VALIDATION",
+                "description": "Local SoftwareX validation summary for Scandella et al. G1-G4 shear specimens.",
+                "derived_outputs": [
+                    str(OUT_DIR / "softwarex_scandella_validation_summary.csv"),
+                    str(DOC_DIR / "SOFTWAREX_SCANDella_VALIDATION_AUDIT.md"),
+                ],
+                "allowed_claim": "A related local shear workflow has reported experiment-comparison errors of 0.6-7.1% across four Scandella specimens.",
+                "forbidden_claim": "These results do not directly validate the P1 shell-representation sensitivity ratios.",
+            },
+            {
                 "id": "E-DECONFOUNDED-PROBE",
                 "description": "Conservative result-provenance token probe for candidate in-plane shear signatures.",
                 "derived_outputs": [
@@ -561,6 +628,17 @@ def revise_v8(raw_audit: pd.DataFrame, softwarex_df: pd.DataFrame) -> Path:
     job2 = raw_audit[raw_audit["job"] == "Job-2"].iloc[0].to_dict()
     sw_n = len(softwarex_df)
     sw_completed = int(softwarex_df["riks_sta_completed_successfully"].fillna(False).sum()) if sw_n else 0
+    validation_path = OUT_DIR / "softwarex_scandella_validation_summary.csv"
+    validation_df = pd.read_csv(validation_path) if validation_path.exists() else pd.DataFrame()
+    if validation_df.empty:
+        validation_sentence = "A local experimental validation summary was not parsed for this v8 build."
+    else:
+        validation_sentence = (
+            f"The same SoftwareX validation records report {len(validation_df)} Scandella et al. shear specimens with "
+            f"absolute percentage errors ranging from {validation_df['abs_error_percent'].min():.1f}% to "
+            f"{validation_df['abs_error_percent'].max():.1f}% and a mean absolute error of "
+            f"{validation_df['abs_error_percent'].mean():.2f}%."
+        )
 
     odb_size = job2.get("odb_size_bytes", NA)
     try:
@@ -575,7 +653,7 @@ After the v7 audit, an additional separated-family Abaqus working directory was 
 
 The same audit also sharpens the interpretation boundary. The parsed `Job-2.sta` file is not marked as successfully completed; the final status line reports that the analysis was not completed. The parsed message file reports termination due to previous errors, a minimum-time-increment error, {job2.get('total_increments', 'not_available')} increments, {job2.get('cutbacks', 'not_available')} cutbacks, {job2.get('iterations', 'not_available')} iterations and {job2.get('negative_eigenvalue_warnings', 'not_available')} negative-eigenvalue warnings. Therefore, this raw solver evidence strengthens traceability but does not permit the nonlinear RF peak to be interpreted as an ultimate load or design resistance. It supports the present choice to report peak_abs_rf2 only as a curve-derived reaction index.
 
-For external workflow contrast, the local SoftwareX shear-code work directory was also audited. The audit found {sw_n} Riks shear benchmark job records, of which {sw_completed} had `.sta` files marked as successfully completed. These files are not used as direct validation of the present paired sensitivity ratios because they belong to a different published software-validation workflow. They are used only to define the reproducibility standard that the present P1 archive should meet in a stronger resubmission: per-case input files, solver-status files, output databases or derived solver logs, and a short runbook linking each manuscript number to its source file.
+For external workflow contrast, the local SoftwareX shear-code work directory was also audited. The audit found {sw_n} Riks shear benchmark job records, of which {sw_completed} had `.sta` files marked as successfully completed. {validation_sentence} These files are not used as direct validation of the present paired sensitivity ratios because they belong to a different published software-validation workflow. They are used only to define the reproducibility standard that the present P1 archive should meet in a stronger resubmission: per-case input files, solver-status files, output databases or derived solver logs, and a short runbook linking each manuscript number to its source file.
 """
 
     if "### 2.5 Raw solver-output audit and benchmark contrast" not in original:
@@ -609,6 +687,11 @@ During the preparation of this manuscript draft, OpenAI ChatGPT/Codex was used t
 """
     if "## Declaration of generative AI and AI-assisted technologies in the writing process" not in original:
         original = original.replace("## References", ai_declaration.strip() + "\n\n## References")
+    if "Scandella C, Neuenschwander M, Mosalam KM, Knobloch M, Fontana M." not in original:
+        original = original.replace(
+            "[5] Daley AJ, Davis DB, White DW. Shear strength of unstiffened steel plate girders. In: Structural Stability Research Council Annual Stability Conference 2016, SSRC 2016. 2016. pp. 132-147.",
+            "[5] Daley AJ, Davis DB, White DW. Shear strength of unstiffened steel plate girders. In: Structural Stability Research Council Annual Stability Conference 2016, SSRC 2016. 2016. pp. 132-147.\n\n[6] Scandella C, Neuenschwander M, Mosalam KM, Knobloch M, Fontana M. Structural behavior of steel-plate girders in shear: Experimental study and review of current design principles. Journal of Structural Engineering. 2020;146(11):04020243. doi:10.1061/(ASCE)ST.1943-541X.0002804.",
+        )
 
     out = MANUSCRIPT_DIR / "manuscript_v8_high_probability_supplemented.md"
     out.write_text(original, encoding="utf-8")
@@ -694,7 +777,7 @@ def write_cover_letter() -> Path:
 
 
 def write_submission_readme(package_paths: dict[str, Path]) -> Path:
-    out = PACKAGE_DIR / "00-README-投稿前必读_v8.md"
+    out = PACKAGE_DIR / "00-README-presubmission-v8.md"
     lines = [
         "# JCSR v8 投稿前必读",
         "",
@@ -830,6 +913,11 @@ def gate_report(raw_audit: pd.DataFrame, softwarex_df: pd.DataFrame, outputs: di
     job2 = raw_audit[raw_audit["job"] == "Job-2"].iloc[0]
     sw_n = len(softwarex_df)
     sw_completed = int(softwarex_df["riks_sta_completed_successfully"].fillna(False).sum()) if sw_n else 0
+    validation_path = OUT_DIR / "softwarex_scandella_validation_summary.csv"
+    validation_df = pd.read_csv(validation_path) if validation_path.exists() else pd.DataFrame()
+    validation_line = ""
+    if not validation_df.empty:
+        validation_line = f"- Parsed SoftwareX/Scandella validation summary: n={len(validation_df)}, mean absolute error={validation_df['abs_error_percent'].mean():.2f}%, range={validation_df['abs_error_percent'].min():.1f}-{validation_df['abs_error_percent'].max():.1f}%."
     lines = [
         "# V8 High-Probability Supplement Gate Report",
         "",
@@ -841,6 +929,7 @@ def gate_report(raw_audit: pd.DataFrame, softwarex_df: pd.DataFrame, outputs: di
         f"- Verified from raw INP: element type `{job2.get('element_types', NA)}`, Static Riks={job2.get('has_static_riks', NA)}, contact={job2.get('has_contact', NA)}, friction={job2.get('has_friction', NA)}.",
         f"- Parsed raw solver status: completed={job2.get('sta_completed_successfully', NA)}, increments={job2.get('total_increments', NA)}, cutbacks={job2.get('cutbacks', NA)}, iterations={job2.get('iterations', NA)}, error messages={job2.get('error_messages', NA)}.",
         f"- Audited SoftwareX shear benchmark solver files: {sw_completed}/{sw_n} Riks records marked completed.",
+        validation_line,
         "- Added v8 manuscript section separating solver traceability evidence from validation/capacity evidence.",
         "",
         "## What remains blocked",
@@ -874,6 +963,8 @@ def main() -> None:
 
     softwarex_df = softwarex_solver_audit()
     softwarex_df.to_csv(OUT_DIR / "softwarex_shear_solver_benchmark_audit.csv", index=False, encoding="utf-8-sig")
+    validation_df = softwarex_validation_audit()
+    validation_df.to_csv(OUT_DIR / "softwarex_scandella_validation_summary.csv", index=False, encoding="utf-8-sig")
     plot_path = make_softwarex_plot(softwarex_df)
     copy_final_figures(plot_path)
 
@@ -882,6 +973,7 @@ def main() -> None:
 
     raw_report = raw_solver_report(inventory, raw_audit)
     softwarex_report_path = softwarex_report(softwarex_df, plot_path)
+    validation_report_path = softwarex_validation_report(validation_df)
     probe_report = deconfounded_probe_report(probe_df)
     trace_path = build_traceability(raw_report, softwarex_report_path, probe_report)
     v8_path = revise_v8(raw_audit, softwarex_df)
@@ -891,9 +983,11 @@ def main() -> None:
         "raw solver inventory": OUT_DIR / "p1_raw_solver_file_inventory.csv",
         "raw solver audit": OUT_DIR / "p1_raw_job_solver_audit.csv",
         "SoftwareX benchmark audit": OUT_DIR / "softwarex_shear_solver_benchmark_audit.csv",
+        "SoftwareX Scandella validation summary": OUT_DIR / "softwarex_scandella_validation_summary.csv",
         "deconfounded probe rows": OUT_DIR / "deconfounded_match_probe_rows.csv",
         "raw solver report": raw_report,
         "SoftwareX report": softwarex_report_path,
+        "SoftwareX Scandella validation report": validation_report_path,
         "deconfounded probe report": probe_report,
         "traceability": trace_path,
         "v8 manuscript": v8_path,

@@ -1,6 +1,6 @@
 # Reproducible Runbook
 
-Generated: 2026-05-17T20:56:13
+Generated: 2026-05-17T21:08:07
 
 ## Environment
 
@@ -34,6 +34,7 @@ Public users can inspect the derived CSV files in `derived_outputs/` and verify 
 - raw Job-2 nonlinear solver status: not successfully completed;
 - raw Job-2 summary: 108 increments, 20 cutbacks, 447 iterations, 2 error messages;
 - SoftwareX shear benchmark audit: 4/4 Riks records marked completed.
+- SoftwareX/Scandella validation summary: 4 specimens, 0.6-7.1% absolute error, 2.85% mean absolute error.
 
 ## Success criteria
 
