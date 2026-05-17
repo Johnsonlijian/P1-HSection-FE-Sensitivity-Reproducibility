@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this reproducibility package, please cite the associated manuscript."
+title: "Reproducibility package for H-section FE representation sensitivity under in-plane shear"
+authors:
+  - family-names: "[verify]"
+    given-names: "[verify]"
+version: "v8"
+date-released: "2026-05-17"
+repository-code: "https://github.com/Johnsonlijian/P1-HSection-FE-Sensitivity-Reproducibility"

@@ -1,0 +1,6 @@
+source_id,name,type,redistribution_status,link_or_location,role
+P1-DERIVED,v8 derived audit tables,derived csv,redistributable within this package,derived_outputs/,supports manuscript traceability
+P1-RAW-SEPH,raw separated-family Abaqus working directory,private solver files,not redistributed,author workspace only,source for raw solver audit
+SOFTWAREX-SHEAR,Auto-PHSSCW / SoftwareX shear workflow,code/workflow,external project assets,http://github.com/Johnsonlijian/Auto-PHSSCW,benchmark workflow contrast
+JCSR-GFA,Journal of Constructional Steel Research Guide for Authors,official instructions,public,https://www.sciencedirect.com/journal/journal-of-constructional-steel-research/publish/guide-for-authors,submission formatting and policy
+ELSEVIER-AI,Elsevier AI-assisted writing policy,official policy,public,https://www.elsevier.com/en-gb/about/policies-and-standards/the-use-of-generative-ai-and-ai-assisted-technologies-in-writing-for-elsevier,AI declaration
