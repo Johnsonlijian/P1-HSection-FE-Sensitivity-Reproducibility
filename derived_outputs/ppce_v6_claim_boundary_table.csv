@@ -1,0 +1,6 @@
+evidence item,supported claim,claim not supported
+11 paired positive Mode 1 eigenvalues,Elastic model-family sensitivity under the audited baseline,General elastic-buckling design recommendation
+11 paired RF-U response indices,Nonlinear response-index divergence,Verified nonlinear strength or resistance
+Raw Job-2 solver audit,Intended S4R/Riks/contact setup and non-completion status,Completed nonlinear verification
+Registry parameter fields,Archive-scope documentation,Controlled parameter study
+Supplementary external workflow context,Example of a separate completed workflow,Validation of the present H-section archive

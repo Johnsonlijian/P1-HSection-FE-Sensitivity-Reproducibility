@@ -1,0 +1,9 @@
+item,audited value/status,interpretation boundary
+registry coverage,"105 script records; 15 rows match cf1f=0, cf2f=1, cf3f=0","Registry rows describe archive scripts, not independent physical specimens."
+H-section geometry parameters,"A=100-600, B=75-300, C=5-10, D=7-15, L=500-3000; model length units inherited from scripts",Ranges are registry values; they are not used as a design parameter study in the manuscript.
+stiffener/connection parameters,"E=1-3, F=1-4, BoltD=20-27, BoltB=0-65",Used only to document archive scope; not isolated in the statistical comparison.
+material registry values,"yfss=355.61-410, yuss=444-650, yusn=0.009-0.1576",Material fields are script-level registry values; plastic hardening is not independently calibrated here.
+mesh and element,meshsz=10-100; raw solver audit reports S4R shell elements,No full mesh-convergence study is claimed.
+contact and friction,"contact fields present in baseline rows; sfricn=0.3-0.35; raw audit has_contact=True, has_friction=True",Representation and interface/contact assumptions remain coupled.
+imperfection information,Imperfectfactor entries present for 4 of 15 baseline rows,Imperfection effects are not isolated; missing entries are disclosed rather than imputed.
+solver controls/status,"Static Riks present for Job-2; status audit records 108 increments, 20 cutbacks, 447 iterations, 8 negative-eigenvalue warnings and 2 errors","The nonlinear record is response-index evidence, not completed nonlinear verification."
