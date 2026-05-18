@@ -35,4 +35,4 @@ The package supports auditability of available derived results and solver-file t
 
 ## Suggested manuscript wording
 
-See `MANUSCRIPT_REPRODUCIBILITY_TEXT.md` for data availability and reproducibility text that can be adapted after the repository URL is confirmed.
+See `REPRODUCIBILITY_TEXT_FOR_PAPER.md` for data availability and reproducibility text that can be adapted after the repository URL is confirmed.
