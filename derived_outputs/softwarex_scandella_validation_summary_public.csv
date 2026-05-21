@@ -1,5 +1,0 @@
-﻿specimen,fe_predicted_shear_kN,experimental_shear_kN,signed_error_percent,abs_error_percent,reported_lpf,reported_max_displacement_mm,source_file,source_interpretation
-G1,703.87,685.4,2.7,2.7,1.0504,63.03,R:\NAS_DRIVE\IMUT\1-Research_Output\1-Papers\2-已发表\21-SoftwareX\4-Reivsed\shearcode\G1-G4_完整分析结果汇总.md,SoftwareX/Scandella shear-workflow validation summary; not a direct validation of P1 paired sensitivity ratios.
-G2,513.21,479.1,7.1,7.1,1.0648,63.89,R:\NAS_DRIVE\IMUT\1-Research_Output\1-Papers\2-已发表\21-SoftwareX\4-Reivsed\shearcode\G1-G4_完整分析结果汇总.md,SoftwareX/Scandella shear-workflow validation summary; not a direct validation of P1 paired sensitivity ratios.
-G3,604.67,598.5,1.0,1.0,1.0218,61.31,R:\NAS_DRIVE\IMUT\1-Research_Output\1-Papers\2-已发表\21-SoftwareX\4-Reivsed\shearcode\G1-G4_完整分析结果汇总.md,SoftwareX/Scandella shear-workflow validation summary; not a direct validation of P1 paired sensitivity ratios.
-G4,697.7,693.2,0.6,0.6,1.0228,61.37,R:\NAS_DRIVE\IMUT\1-Research_Output\1-Papers\2-已发表\21-SoftwareX\4-Reivsed\shearcode\G1-G4_完整分析结果汇总.md,SoftwareX/Scandella shear-workflow validation summary; not a direct validation of P1 paired sensitivity ratios.
