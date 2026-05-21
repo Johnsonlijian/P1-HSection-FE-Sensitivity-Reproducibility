@@ -1,16 +1,16 @@
-# P1 H-Section FE Model-Family Audit - Public Reproducibility Package
+# P1 H-Section FE Model-Family Sensitivity - Public Reproducibility Package
 
-This package contains non-sensitive reproducibility assets for a bounded short technical manuscript on Abaqus shell model-family auditing for H-section steel members.
+This package contains non-sensitive reproducibility assets for a bounded civil-engineering manuscript on Abaqus shell model-family sensitivity for H-section steel members.
 
 Associated manuscript route:
 
-> A reproducible model-family audit of Abaqus shell models for H-section steel members
+> Model-family sensitivity of Abaqus shell idealisations for H-section steel members: a reproducible archive-based assessment
 
 ## What is included
 
 - Public derived CSV audit tables.
 - Public figure files for the main reported ratios.
-- Claim-boundary and model-parameter audit tables for the PPCE v6 submission package.
+- Claim-boundary and model-parameter audit tables for the EJECE v7 submission package.
 - Traceability metadata and public solver-status summaries.
 - Local audit script used to generate internal derived outputs.
 - Runbook, dataset/source registry, citation metadata and manuscript-ready reproducibility wording.
@@ -32,6 +32,10 @@ Associated manuscript route:
 ## Evidence boundary
 
 The package supports auditability of available derived results and solver-file traces. It does not claim experimental validation, strength prediction, design resistance or a deconfounded shell-representation effect.
+
+## Author
+
+Lijian REN, Inner Mongolia University of Technology; Hohai University. ORCID: https://orcid.org/0000-0003-1629-4368
 
 ## Suggested manuscript wording
 
