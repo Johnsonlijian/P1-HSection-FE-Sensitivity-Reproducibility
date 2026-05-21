@@ -8,9 +8,11 @@ Derived tables, public figure files, supplementary claim-evidence matrices and r
 
 `https://github.com/Johnsonlijian/P1-HSection-FE-Sensitivity-Reproducibility`
 
-If the archived release DOI is available before manuscript submission, cite the DOI in the manuscript Data availability statement:
+The archived GitHub release used for the EJECE v7 submission is:
 
-`[insert Zenodo DOI for the GitHub release]`
+`https://github.com/Johnsonlijian/P1-HSection-FE-Sensitivity-Reproducibility/releases/tag/v7-ejece-2026-05-21`
+
+If a Zenodo DOI is generated from this release before manuscript submission, cite the DOI in addition to the GitHub release URL.
 
 Raw Abaqus binary outputs are not redistributed because they contain large project-internal solver files. The public repository includes derived non-sensitive tables sufficient to reproduce the reported ratios, confidence intervals, claim-boundary table and solver-status summaries.
 
