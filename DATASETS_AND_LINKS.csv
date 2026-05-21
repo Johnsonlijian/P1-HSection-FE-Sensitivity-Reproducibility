@@ -1,9 +1,7 @@
 source_id,name,type,redistribution_status,link_or_location,role
-P1-DERIVED,PPCE v6 derived audit tables,derived csv,redistributable within this package,derived_outputs/,supports manuscript traceability
-P1-FIGURES,PPCE v6 public figure files,derived png,redistributable within this package,figures/,supports main ratio summaries
-P1-CLAIM-BOUNDARY,PPCE v6 claim-boundary table,derived csv,redistributable within this package,derived_outputs/ppce_v6_claim_boundary_table.csv,documents supported and unsupported claim levels
-P1-MODEL-AUDIT,PPCE v6 model-parameter audit,derived csv,redistributable within this package,derived_outputs/ppce_v6_model_parameter_audit.csv,documents archive-scope model and solver fields
+P1-DERIVED,EJECE v7 derived audit tables,derived csv,redistributable within this package,derived_outputs/,supports manuscript traceability
+P1-FIGURES,EJECE v7 public figure files,derived png,redistributable within this package,figures/,supports main ratio summaries
+P1-CLAIM-BOUNDARY,EJECE v7 claim-boundary table,derived csv,redistributable within this package,derived_outputs/ppce_v6_claim_boundary_table.csv,documents supported and unsupported claim levels
+P1-MODEL-AUDIT,EJECE v7 model-parameter audit,derived csv,redistributable within this package,derived_outputs/ppce_v6_model_parameter_audit.csv,documents archive-scope model and solver fields
 P1-RAW-SEPH,raw separated-family Abaqus working directory,private solver files,not redistributed,author workspace only,source for raw solver audit
-SOFTWAREX-SHEAR,Auto-PHSSCW / SoftwareX shear workflow,code/workflow,external project assets,http://github.com/Johnsonlijian/Auto-PHSSCW,benchmark workflow contrast
-PPCE-SUBMISSIONS,Periodica Polytechnica Civil Engineering submissions,official instructions,public,https://www.pp.bme.hu/ci/about/submissions,submission formatting and policy
-PPCE-ABOUT,Periodica Polytechnica Civil Engineering scope and open access page,official information,public,https://pp.bme.hu/ci/about,scope and no-APC information
+EJECE-INSTRUCTIONS,European Journal of Environmental and Civil Engineering instructions for authors,official instructions,public,https://www.tandfonline.com/action/authorSubmission?journalCode=tece20,submission formatting and policy
