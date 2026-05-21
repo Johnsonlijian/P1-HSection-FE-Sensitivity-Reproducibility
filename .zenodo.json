@@ -1,0 +1,22 @@
+{
+  "title": "Reproducibility package for model-family sensitivity of Abaqus shell idealisations for H-section steel members",
+  "creators": [
+    {
+      "name": "REN, Lijian",
+      "orcid": "0000-0003-1629-4368",
+      "affiliation": "Inner Mongolia University of Technology; Hohai University"
+    }
+  ],
+  "description": "Non-sensitive derived tables, public figures, claim-boundary matrices, solver-status summaries and scripts supporting a reproducible archive-based assessment of Abaqus shell model-family sensitivity for H-section steel members.",
+  "keywords": [
+    "Abaqus",
+    "H-section steel member",
+    "shell finite-element model",
+    "model-family sensitivity",
+    "eigenvalue ratio",
+    "reproducibility"
+  ],
+  "license": "MIT",
+  "upload_type": "dataset",
+  "access_right": "open"
+}
