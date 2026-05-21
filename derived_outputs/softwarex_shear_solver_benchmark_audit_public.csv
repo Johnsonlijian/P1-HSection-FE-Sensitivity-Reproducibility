@@ -1,5 +1,0 @@
-﻿case_id,load_case,riks_sta_exists,riks_sta_completed_successfully,riks_sta_row_count,riks_final_step_time_lpf,riks_final_inc_time_lpf,riks_msg_error_messages,riks_msg_wallclock_seconds,riks_element_types,riks_has_static_riks,riks_has_contact,riks_has_friction,buckle_sta_exists,buckle_sta_completed_successfully,buckle_msg_error_messages
-H900_b201_t6_L875,LC4_ShearY,True,True,27,1.02,0.08747,0,19,S4R,True,False,False,True,True,0
-H900_b202_t4_L880,LC4_ShearY,True,True,32,1.06,0.07627,0,23,S4R,True,False,False,True,True,0
-H900_b202_t6_L1320,LC4_ShearY,True,True,31,1.02,0.1072,0,30,S4R,True,False,False,True,True,0
-H900_b202_t6_L880,LC4_ShearY,True,True,30,1.05,0.07876,0,22,S4R,True,False,False,True,True,0
