@@ -1,9 +1,11 @@
 cff-version: 1.2.0
 message: "If you use this reproducibility package, please cite the associated manuscript."
-title: "Reproducibility package for an Abaqus shell model-family audit of H-section steel members"
+title: "Reproducibility package for model-family sensitivity of Abaqus shell idealisations for H-section steel members"
 authors:
-  - family-names: "[verify]"
-    given-names: "[verify]"
-version: "v6-public"
-date-released: "2026-05-18"
+  - family-names: "REN"
+    given-names: "Lijian"
+    orcid: "https://orcid.org/0000-0003-1629-4368"
+version: "v7-ejece-2026-05-21"
+date-released: "2026-05-21"
 repository-code: "https://github.com/Johnsonlijian/P1-HSection-FE-Sensitivity-Reproducibility"
+license: "MIT"
